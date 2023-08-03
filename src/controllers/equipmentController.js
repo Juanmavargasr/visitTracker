@@ -20,4 +20,45 @@ const createEquipment = async (req, res) => {
   }
 };
 
-module.exports = { createEquipment };
+const getEquipment = async (req, res) => {
+  try {
+    const foundEquipment = await Equipment.find({});
+    if (!foundEquipment) {
+      res.status(404).json({ message: "equipment not found" });
+    } else {
+      console.log("Succesfully equipment found");
+      res.status(200).json({
+        message: "succesfully equipment found",
+        equipment: foundEquipment,
+      });
+    }
+  } catch (error) {
+    console.error(error, "error geting the equipment");
+    res.status(500).json({
+      error: "error getting the equipment",
+    });
+  }
+};
+
+const getEquipmentById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const foundEquipment = await Equipment.findById({ _id: id });
+    if (!foundEquipment) {
+      res.status(404).json({ message: "equipment not found" });
+    } else {
+      console.log("Succesfully equipment found");
+      res.status(200).json({
+        message: "succesfully equipment found",
+        equipment: foundEquipment,
+      });
+    }
+  } catch (error) {
+    console.error(error, "error geting the equipment");
+    res.status(500).json({
+      error: "error getting the equipment",
+    });
+  }
+};
+
+module.exports = { createEquipment, getEquipment, getEquipmentById };
