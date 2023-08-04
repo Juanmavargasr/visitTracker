@@ -1,7 +1,12 @@
 const express = require("express");
 const { authenticateToken } = require("../utils/authentication");
 const { adminRolValidation } = require("../utils/services");
-const { createUser, logIn } = require("../controllers/userController");
+const {
+  createUser,
+  logIn,
+  getUsers,
+  getUserById,
+} = require("../controllers/userController");
 const {
   validateUserCreateInfo,
   validateUserLogInInfo,
@@ -16,6 +21,11 @@ router.post(
   validateUserCreateInfo,
   createUser
 );
+
 router.post("/login", validateUserLogInInfo, logIn);
+
+router.get("/createUser", authenticateToken, adminRolValidation, getUsers);
+
+router.post("/createUser", authenticateToken, adminRolValidation, getUserById);
 
 module.exports = router;

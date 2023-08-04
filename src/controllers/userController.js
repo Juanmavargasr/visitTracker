@@ -78,4 +78,44 @@ const logIn = async (req, res) => {
   }
 };
 
-module.exports = { createUser, logIn };
+const getUsers = async (req, res) => {
+  try {
+    const foundUsers = await User.find({});
+    if (!foundUser) {
+      res.status(404).json({ message: "Users not found" });
+    } else {
+      res.status(200) -
+        json({
+          message: "Users succesfuly found",
+          users: foundUsers,
+        });
+    }
+  } catch (error) {
+    console.error("Error finding the users", error);
+    res.status(500).json({
+      error: "Error finding the users",
+    });
+  }
+};
+
+const getUserById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const foundUsers = await User.findById({ _id: id });
+    if (!foundUser) {
+      res.status(404).json({ message: "Users not found" });
+    } else {
+      res.status(200) -
+        json({
+          message: "Users succesfuly found",
+          users: foundUsers,
+        });
+    }
+  } catch (error) {
+    console.error("Error finding the users", error);
+    res.status(500).json({
+      error: "Error finding the users",
+    });
+  }
+};
+module.exports = { createUser, logIn, getUsers, getUserById };
