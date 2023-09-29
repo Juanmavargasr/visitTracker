@@ -2,6 +2,8 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 const port = process.env.SECRET_PORT;
+const cors = require("cors");
+
 const { authenticateToken } = require("./utils/authentication");
 const coordinatorRoutes = require("./routes/coordinatorRoutes");
 const departmentRoutes = require("./routes/departmentRoutes");
@@ -12,6 +14,15 @@ const ticketRoutes = require("./routes/ticketRoutes");
 const userRoutes = require("./routes/userRoutes");
 const visitRoutes = require("./routes/visitRoutes");
 const zoneRoutes = require("./routes/zoneRoutes");
+
+app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use((req, res, next) => {
   try {
@@ -26,8 +37,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-app.use(express.json());
 
 app.use("/users", userRoutes);
 

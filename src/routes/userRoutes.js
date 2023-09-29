@@ -6,6 +6,7 @@ const {
   logIn,
   getUsers,
   getUserById,
+  logOut,
 } = require("../controllers/userController");
 const {
   validateUserCreateInfo,
@@ -27,5 +28,7 @@ router.post("/login", validateUserLogInInfo, logIn);
 router.get("/createUser", authenticateToken, adminRolValidation, getUsers);
 
 router.post("/createUser", authenticateToken, adminRolValidation, getUserById);
+
+router.post("/logout", logOut);
 
 module.exports = router;

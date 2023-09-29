@@ -48,7 +48,7 @@ const logIn = async (req, res) => {
     const payload = {
       _id: user._id,
       id: user.id,
-      name: user.Name,
+      name: user.name, //ojo, creo que ese Name debe ser realmente un name
       rol: user.rol,
       department: user.department,
       zone: user.zone,
@@ -68,10 +68,14 @@ const logIn = async (req, res) => {
 
     console.log("Inicio de sesión satisfactorio");
 
-    res.status(200).json({
-      message: "Succesfully logIn",
-      token: accessToken,
-    });
+    {
+      res.cookie("token", accessToken, {});
+      res.status(200).json({
+        message: "Succesfully logIn",
+        token: accessToken,
+        user: payload,
+      });
+    }
   } catch (error) {
     console.error("Error login the user:", error);
     res.status(500).json({ error: "Error login the user" });
@@ -118,4 +122,10 @@ const getUserById = async (req, res) => {
     });
   }
 };
-module.exports = { createUser, logIn, getUsers, getUserById };
+
+const logOut = async (req, res) => {
+  res.cookie("token", "", { expires: new Date(0) });
+  return res.status(200).json({ message: "successfully logout" });
+};
+
+module.exports = { createUser, logIn, getUsers, getUserById, logOut };
