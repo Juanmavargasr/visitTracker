@@ -53,10 +53,10 @@ const getTicket = async (req, res) => {
 
   try {
     if (rol === "admin") {
-      const findedTickets = await Ticket.find({});
+      const foundTickets = await Ticket.find({});
       res.status(200).json({
         message: "",
-        findedTickets,
+        foundTickets,
       });
     } else if (!department) {
       console.error("User does not have department");
@@ -64,10 +64,12 @@ const getTicket = async (req, res) => {
         error: "User does not have deparment",
       });
     } else {
-      const findedTickets = await Ticket.find({ department: department });
+      console.log(user.department);
+      const foundTickets = await Ticket.find({ department: department });
+      console.log(foundTickets);
       res.status(200).json({
         message: "",
-        findedTickets,
+        foundTickets,
       });
     }
   } catch (error) {

@@ -4,7 +4,10 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const authenticateToken = (req, res, next) => {
-  const token = req.header("Authorization").replace("Bearer ", "");
+  // const token = req.header("Authorization").replace("Bearer ", "");
+
+  const { token } = req.cookies;
+
   if (!token) {
     return res.status(401).json({ error: "Por favor inicia sesión" });
   }

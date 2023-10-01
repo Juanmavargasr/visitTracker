@@ -3,6 +3,7 @@ require("dotenv").config();
 const app = express();
 const port = process.env.SECRET_PORT;
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const { authenticateToken } = require("./utils/authentication");
 const coordinatorRoutes = require("./routes/coordinatorRoutes");
@@ -16,7 +17,7 @@ const visitRoutes = require("./routes/visitRoutes");
 const zoneRoutes = require("./routes/zoneRoutes");
 
 app.use(express.json());
-
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:5173",
